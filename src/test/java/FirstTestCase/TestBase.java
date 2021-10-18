@@ -83,7 +83,7 @@ public class TestBase {
     @Step("Перехожу в рандомный пункт меню для оформления тестового заказа")
     public void mathRandomHead() {
         $x("//div[contains(@class, \"header-dropdown-link\")]/a[@id = \"dropdownMenuButton\"]").shouldBe(visible).click();
-        List<SelenideElement> mathRandomHead = elements(By.xpath("//ul[contains(@class, \"dropdown-menu\")]/li/a[contains(@href, \"/menu\") and not (@href = \"/menu/soberi-pizzu-sam\")]"));
+        List<SelenideElement> mathRandomHead = elements(By.xpath("//ul[contains(@class, \"dropdown-menu\")]/li/a[contains(@href, \"/menu\") and not (@href = \"/menu/soberi-pizzu-sam\") and not (@href = \"/menu/kombo\")]"));
         int i = (int) (Math.random() * mathRandomHead.size());
         mathRandomHead.get(i).shouldBe(visible).click();
     }
