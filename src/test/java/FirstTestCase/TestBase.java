@@ -110,7 +110,7 @@ public class TestBase {
 
     @Step("Выбираю тип доставки самовывоз")
     public void selectDeliveryTypePickUp() {
-        $(By.xpath("//label[@class = \"last\"]")).click();
+        $(By.xpath("//label[@class = \"last\"]")).scrollTo().click();
     }
 
 
