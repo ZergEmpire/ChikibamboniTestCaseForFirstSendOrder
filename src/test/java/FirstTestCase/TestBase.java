@@ -100,6 +100,7 @@ public class TestBase {
     @Step("Добавляю в корзину карточку товара")
     public void addCardToBasket() {
         $x("//a[contains(@class, \"add-to-cart\")]").shouldBe(visible).click();
+        $x("//a[contains(@class, \"add-to-cart\")]").shouldBe(visible).click();
     }
 
     @Step("Перехожу в корзину")
