@@ -14,6 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -46,14 +47,15 @@ public class TestBase {
         capabilities.setCapability("browserName", "chrome");
         capabilities.setCapability("browserVersion", "91.0");
 
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+        capabilities.setCapability("moon:options", Map.<String, Object>of(
                 "enableVNC", true,
                 "enableVideo", true
+
         ));
         RemoteWebDriver driver = null;
         try {
             driver = new RemoteWebDriver(
-                    new URL("http://192.168.1.17:4444/wd/hub"),
+                    new URL("http://192.168.1.17:30901/wd/hub"),
                     capabilities
             );
         } catch (MalformedURLException e) {
@@ -62,7 +64,7 @@ public class TestBase {
 
         WebDriverRunner.setWebDriver(driver);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     }
 
@@ -79,6 +81,14 @@ public class TestBase {
     public void openURL() {
         open("https://чикибамбони.рф/");
     }
+
+    public void restSelect() {
+        $x("//div[contains(@class, \"desktop\")]/div [@class = \"top-rest-select\"]").click();
+        List<SelenideElement> terminalSwitch = elements(By.xpath("//div[contains(@class, \"desktop\")]/div [@class = \"top-rest-select\"]/ul[contains(@class, \"dropdown\")]/li/a"));
+        int i = (int) (Math.random() * terminalSwitch.size());
+        terminalSwitch.get(i).click();
+    }
+
 
     @Step("Перехожу в рандомный пункт меню для оформления тестового заказа")
     public void mathRandomHead() {
@@ -100,7 +110,6 @@ public class TestBase {
     @Step("Добавляю в корзину карточку товара")
     public void addCardToBasket() {
         $x("//a[contains(@class, \"add-to-cart\")]").shouldBe(visible).click();
-        $x("//a[contains(@class, \"add-to-cart\")]").shouldBe(visible).click();
     }
 
     @Step("Перехожу в корзину")
@@ -111,7 +120,9 @@ public class TestBase {
 
     @Step("Выбираю тип доставки самовывоз")
     public void selectDeliveryTypePickUp() {
-        $(By.xpath("//label[@class = \"last\"]")).scrollTo().click();
+        SelenideElement typePickUp = $(By.xpath("//div[@class = \"radio-toggler\"]/label[@class = \"last\"]"));
+        typePickUp.closest(".address-summary").scrollIntoView(false);
+        typePickUp.click();
     }
 
 
@@ -142,11 +153,13 @@ public class TestBase {
     @Step("Кликаю на кнопку отправки заказа")
     public void sendOrder() {
         $x("//div[@class = \"item-cart-buttons\" ]/button[contains(@class, \"btn\")]").scrollTo().click();
+        $x("//b[contains(text(),'Информация о заказе')]").shouldBe(visible);
     }
 
     @Step("Жду перехода в статус принят")
     public void waitForComplete() {
-        $x("//span[contains(text(),'Принят') or (contains(text(),'Поступил')) ]").shouldBe(visible);
+
+        $x("//span[contains(text(),'Принят') or (contains(text(),'Поступил') or (contains(text(),'Просмотрен')) ]").shouldBe(visible);
     }
 
 
