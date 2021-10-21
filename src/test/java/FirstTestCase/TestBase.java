@@ -159,7 +159,7 @@ public class TestBase {
     @Step("Жду перехода в статус принят")
     public void waitForComplete() {
 
-        $x("//span[contains(text(),'Принят') or (contains(text(),'Поступил') or (contains(text(),'Просмотрен')) ]").shouldBe(visible);
+        $x("//span[contains(text(), \"Принят\") or (contains(text(), \"Поступил\"))]").shouldBe(visible);
     }
 
 
