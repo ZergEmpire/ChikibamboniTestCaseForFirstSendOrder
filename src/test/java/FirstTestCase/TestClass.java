@@ -10,7 +10,6 @@ public class TestClass extends TestBase {
         restSelect();
         mathRandomHead();
         pickRandCards();
-        addCardToBasket();
         goBasket();
         selectDeliveryTypePickUp();
         selectTerminalForPickUp();

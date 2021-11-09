@@ -93,7 +93,7 @@ public class TestBase {
     @Step("Перехожу в рандомный пункт меню для оформления тестового заказа")
     public void mathRandomHead() {
         $x("//div[contains(@class, \"header-dropdown-link\")]/a[@id = \"dropdownMenuButton\"]").shouldBe(visible).click();
-        List<SelenideElement> mathRandomHead = elements(By.xpath("//ul[contains(@class, \"dropdown-menu\")]/li/a[contains(@href, \"/menu\") and not (@href = \"/menu/soberi-pizzu-sam\") and not (@href = \"/menu/kombo\")]"));
+        List<SelenideElement> mathRandomHead = elements(By.xpath("//ul[contains(@class, \"dropdown-menu\")]/li/a[contains(@href, \"/menu\") and not (@href = \"/menu/soberi-pizzu-sam\") and not (@href = \"/menu/kombo\") and not (@href = \"/menu/biznes-lanch\")]"));
         int i = (int) (Math.random() * mathRandomHead.size());
         mathRandomHead.get(i).shouldBe(visible).click();
     }
@@ -104,17 +104,19 @@ public class TestBase {
         List<SelenideElement> clickRandomCards = elements(By.xpath("//a[contains(@class, \"product-link-short\") and not (@data-discount-time-id = \"\")]"));
         int i = (int) (Math.random() * clickRandomCards.size());
         SelenideElement randCard = $(clickRandomCards.get(i));
+        SelenideElement addCart = $x("//a[contains(@class, \"add-to-cart\")]");
         randCard.closest(".item").scrollIntoView(true);
         randCard.click();
-    }
-    @Step("Добавляю в корзину карточку товара")
-    public void addCardToBasket() {
-        $x("//a[contains(@class, \"add-to-cart\")]").shouldBe(visible).click();
+        addCart.click();
+
+
     }
 
     @Step("Перехожу в корзину")
     public void goBasket() {
-        $x("//a[contains(@class, \"btn-basket\")]").click();
+        SelenideElement moveToBusket = $x("//a[@href = \"/order\" and contains(@class, \"btn-basket\")]");
+        moveToBusket.scrollTo().click();
+
     }
 
 
@@ -152,7 +154,7 @@ public class TestBase {
 
     @Step("Кликаю на кнопку отправки заказа")
     public void sendOrder() {
-        $x("//div[@class = \"item-cart-buttons\" ]/button[contains(@class, \"btn\")]").scrollTo().click();
+        $x("//div[@class = \"item-cart-buttons\" ]/button[contains(@class, \"btn\") and not (@id)]").scrollTo().click();
         $x("//b[contains(text(),'Информация о заказе')]").shouldBe(visible);
     }
 
