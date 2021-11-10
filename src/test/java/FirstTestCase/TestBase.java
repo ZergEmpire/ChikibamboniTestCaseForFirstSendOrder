@@ -82,6 +82,7 @@ public class TestBase {
         open("https://чикибамбони.рф/");
     }
 
+    @Step ("Выбираю город")
     public void restSelect() {
         $x("//div[contains(@class, \"desktop\")]/div [@class = \"top-rest-select\"]").click();
         List<SelenideElement> terminalSwitch = elements(By.xpath("//div[contains(@class, \"desktop\")]/div [@class = \"top-rest-select\"]/ul[contains(@class, \"dropdown\")]/li/a"));
